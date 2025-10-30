@@ -9,8 +9,6 @@ public record UserDisplayDTO(
 ) {
 
     public UserDisplayDTO(User user) {
-        this.userId = user.getUserId();
-        this.name = user.getName();
-        this.email = user.getEmail();
+        this(user.getUserId(), user.getName(), user.getEmail());
     }
 }
