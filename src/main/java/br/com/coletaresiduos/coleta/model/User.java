@@ -19,15 +19,7 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "SEQ_USERS"
-    )
-    @SequenceGenerator(
-            name = "SEQ_USERS",
-            sequenceName = "SEQ_USERS",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
 

@@ -22,7 +22,7 @@ public class VerifyToken extends OncePerRequestFilter {
     private TokenService tokenService;
 
     @Autowired
-    private UserRepository usuarioRepository;
+    private UserRepository userRepository;
 
 
     @Override
@@ -35,13 +35,13 @@ public class VerifyToken extends OncePerRequestFilter {
         } else {
             token = authorizationHeader.replace("Bearer", "").trim();
             String login = tokenService.validateToken(token);
-            UserDetails usuario = usuarioRepository.findByEmail(login);
+            UserDetails user = userRepository.findByEmail(login);
 
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
-                            usuario,
+                            user,
                             null,
-                            usuario.getAuthorities()
+                            user.getAuthorities()
                     );
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
