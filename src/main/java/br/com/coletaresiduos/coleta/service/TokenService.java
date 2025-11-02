@@ -15,7 +15,10 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    @Value("${secret.key}")
+    @Value("${issuer}")
+    private String issuer;
+
+    @Value("${secretKey}")
     private String secretWord;
 
     public String generateToken(User user){
@@ -24,14 +27,14 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secretWord);
 
             String token = JWT.create()
-                    .withIssuer("calorias")
+                    .withIssuer(issuer)
                     .withSubject(user.getEmail())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
 
             return token;
         } catch (JWTCreationException e){
-            throw new RuntimeException("Não foi possível gerar o token!");
+            throw new RuntimeException("The token could not be generated");
         }
 
     }
@@ -49,7 +52,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secretWord);
 
             return JWT.require(algorithm)
-                    .withIssuer("calorias")
+                    .withIssuer(issuer)
                     .build()
                     .verify(token)
                     .getSubject();
