@@ -22,7 +22,7 @@ public class CollectionPointController {
 
     @PostMapping("/collection-point")
     @ResponseStatus(HttpStatus.CREATED)
-    public CollectionPointDisplayDTO saveUser(@RequestBody @Valid CollectionPointRegisterDTO collectionPointRegisterDTO) {
+    public CollectionPointDisplayDTO save(@RequestBody @Valid CollectionPointRegisterDTO collectionPointRegisterDTO) {
         return collectionPointService.save(collectionPointRegisterDTO);
     }
 
@@ -38,7 +38,7 @@ public class CollectionPointController {
     }
 
     @GetMapping("/collection-point/{material}")
-    public List<CollectionPointDisplayDTO> getByMaterial(Material material) {
+    public List<CollectionPointDisplayDTO> getByMaterial(@PathVariable Material material) {
         return collectionPointService.getByMaterial(material);
     }
 

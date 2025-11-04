@@ -22,7 +22,7 @@ public class SecurityConfig {
     private VerifyToken verifyToken;
 
     @Bean
-    public SecurityFilterChain filtrarCadeiaDeSeguranca(
+    public SecurityFilterChain filterSecurityChain(
             HttpSecurity httpSecurity
     ) throws Exception {
         return httpSecurity
@@ -32,6 +32,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/collection-point").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/collection-point/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/collection-point").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/collection-point").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(

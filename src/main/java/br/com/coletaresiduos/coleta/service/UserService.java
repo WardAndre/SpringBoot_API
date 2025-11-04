@@ -4,6 +4,7 @@ import br.com.coletaresiduos.coleta.dto.UserDisplayDTO;
 import br.com.coletaresiduos.coleta.dto.UserRegisterDTO;
 import br.com.coletaresiduos.coleta.exception.UserNotFoundException;
 import br.com.coletaresiduos.coleta.model.User;
+import br.com.coletaresiduos.coleta.model.UserRole;
 import br.com.coletaresiduos.coleta.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,10 @@ public class UserService {
         User user = new User();
         BeanUtils.copyProperties(userRegisterDTO, user);
         user.setPassword(encryptedPassword);
+        if (userRegisterDTO.role() == null) {
+            user.setRole(UserRole.USER);
+        }
         User savedUser = userRepository.save(user);
-
         return new UserDisplayDTO(savedUser);
     }
 
