@@ -48,7 +48,7 @@ public class CollectionPointController {
         collectionPointService.delete(id);
     }
 
-    @PutMapping("/user")
+    @PutMapping("/collection-point")
     @ResponseStatus(HttpStatus.OK)
     public CollectionPoint update(@RequestBody CollectionPoint collectionPoint){
         return collectionPointService.update(collectionPoint);
